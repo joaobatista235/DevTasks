@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
 import userRoutes from './routes/userRoutes';
+import authRoutes from './routes/authRoutes';
 
 import './config/firebase';
 
@@ -20,6 +21,7 @@ app.use(express.json());  // Permite ler JSON no body da requisição
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 })); // Máximo de 100 requisições por IP no tempo de windowMs - 15 minutos
 
 app.use('/api', userRoutes);
+app.use('/auth', authRoutes);
 
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);

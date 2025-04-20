@@ -1,8 +1,13 @@
 import { Request, Response, RequestHandler } from 'express';
+import bcrypt from 'bcryptjs';
 
-let users = [
-    { id: 1, name: 'John Doe', email: 'john@example.com' },
-    { id: 2, name: 'Jane Doe', email: 'jane@example.com' }
+export let users = [
+    {
+        id: 1,
+        name: 'John Doe',
+        email: 'john@example.com',
+        password: bcrypt.hashSync('123456', 10)
+    }
 ];
 
 export const getUsers: RequestHandler = (req, res) => {
@@ -10,8 +15,8 @@ export const getUsers: RequestHandler = (req, res) => {
 };
 
 export const createUser: RequestHandler = (req, res) => {
-    const { name, email } = req.body;
-    const newUser = { id: users.length + 1, name, email };
+    const { name, email, password } = req.body;
+    const newUser = { id: users.length + 1, name, email, password };
     users.push(newUser);
     res.status(201).json(newUser);
 };
